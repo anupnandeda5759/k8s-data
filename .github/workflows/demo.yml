@@ -25,3 +25,20 @@ jobs:
            echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
            echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
            echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+  
+  deploy:
+    name: helm chart update
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update kustomization image
+        run: |
+          sed -i "s/k8s-data:.*/k8s-data:${GITHUB_SHA}/g" demo-app/values.yaml
+      - name: Commit changes
+        run: |
+          git config user.name "anupnandeda5759"
+          git config user.email "anupnandeda@gmail.com"
+          git add demo-app/values.yaml
+          git commit -m "Update image to ${{ github.sha }}"
+          git push
