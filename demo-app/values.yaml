@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nanup/k8s-data:067646711890f29bf8a5d15f5c41b648972e3047
+  repository: nanup/k8s-data:12545476638a3127c100f5216bb9f6087adf27e7
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
