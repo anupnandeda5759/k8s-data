@@ -5,6 +5,8 @@ jobs:
   build:
     name: docker build for k8s
     runs-on: ubuntu-latest 
+    outputs:
+        image_tag: ${{ steps.get_tag.outputs.image_tag }}
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v7
@@ -12,11 +14,18 @@ jobs:
         - name: docker login
           run: |
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-        #- name: Login to github package repository
-        #  run: echo $DOCKER_PASSWORD | docker login ghcr.io -u $DOCKER_USERNAME --password-stdin
+        
+        - name: build docker image
+          run: docker build -t nanup/k8s-data@v1
 
-        - name: test
-          run: echo "login success "
-
-    
-  
+        - name: push docker image to docker on
+          id: get_tag
+          run: |
+          IMAGE_TAG=$GITHUB_SHA-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT
+          IMAGE_NAME=nanup/k8s-data:$IMAGE_TAG
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+        
