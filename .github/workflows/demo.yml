@@ -1,0 +1,10 @@
+name: first-cicd
+'on': push
+
+jobs:
+  build:
+    name: clone repo
+    runs-on: ubuntu-latest 
+    uses: actions/checkout
+    
+  
