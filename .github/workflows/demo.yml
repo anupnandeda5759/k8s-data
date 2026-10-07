@@ -3,8 +3,11 @@ name: first-cicd
 
 jobs:
   build:
-    name: clone repo
+    name: docker build for k8s
     runs-on: ubuntu-latest 
-    uses: actions/checkout
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+
     
   
