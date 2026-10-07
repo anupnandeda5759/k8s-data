@@ -1,6 +1,9 @@
 name: first-cicd
 'on': push
 
+permissions:
+  contents: write
+  
 jobs:
   build:
     name: docker build for k8s
