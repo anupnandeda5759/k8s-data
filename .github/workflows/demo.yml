@@ -9,11 +9,11 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v7
 
-        - name: docker login
-          run: |
-           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        #- name: Login to github package repository
-        #  run: echo $DOCKER_PASSWORD | docker login ghcr.io -u $DOCKER_USERNAME --password-stdin
+        #- name: docker login
+        #  run: |
+        #   docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        - name: Login to github package repository
+          run: echo $DOCKER_PASSWORD | docker login ghcr.io -u $DOCKER_USERNAME --password-stdin
 
         - name: test
           run: echo "login success "
