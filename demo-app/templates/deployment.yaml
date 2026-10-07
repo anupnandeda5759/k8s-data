@@ -4,6 +4,7 @@ metadata:
   labels:
     app: logindep
   name: {{ .Release.Name }}-logindep
+  namespace: loginapp
 spec:
   replicas: 3
   selector:
